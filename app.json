@@ -1,0 +1,14 @@
+{
+  "expo": {
+    "name": "BharatTruck Driver",
+    "slug": "bt-driver-app",
+    "version": "1.0.0",
+    "scheme": "btdriver",
+    "platforms": ["ios", "android"],
+    "icon": "./assets/icon.png",
+    "splash": { "resizeMode": "contain", "backgroundColor": "#1a56db" },
+    "ios": { "supportsTablet": false, "bundleIdentifier": "com.bharattruck.driver" },
+    "android": { "adaptiveIcon": { "backgroundColor": "#1a56db" }, "package": "com.bharattruck.driver" },
+    "plugins": ["expo-router", "expo-location"]
+  }
+}
