@@ -4,11 +4,42 @@
     "slug": "bt-driver-app",
     "version": "1.0.0",
     "scheme": "btdriver",
-    "platforms": ["ios", "android"],
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
     "icon": "./assets/icon.png",
-    "splash": { "resizeMode": "contain", "backgroundColor": "#1a56db" },
-    "ios": { "supportsTablet": false, "bundleIdentifier": "com.bharattruck.driver" },
-    "android": { "adaptiveIcon": { "backgroundColor": "#1a56db" }, "package": "com.bharattruck.driver" },
-    "plugins": ["expo-router", "expo-location"]
+    "splash": {
+      "resizeMode": "contain",
+      "backgroundColor": "#1a56db"
+    },
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.bharattruck.driver"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#1a56db"
+      },
+      "package": "com.bharattruck.driver"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-location",
+      "expo-asset"
+    ],
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/icon.png",
+      "name": "BharatTruck Driver",
+      "shortName": "BT Driver",
+      "description": "BharatTruck Driver App – India's Trusted Freight Partner",
+      "themeColor": "#1a56db",
+      "backgroundColor": "#1a56db",
+      "display": "standalone",
+      "orientation": "portrait"
+    }
   }
 }
