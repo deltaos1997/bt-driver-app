@@ -5,7 +5,8 @@
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
-    "ios": "expo start --ios"
+    "ios": "expo start --ios",
+    "build:web": "expo export -p web"
   },
   "dependencies": {
     "@expo-google-fonts/nunito": "^0.2.3",
