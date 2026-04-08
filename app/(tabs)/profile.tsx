@@ -9,7 +9,9 @@ import {
   Alert,
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { useRouter } from 'expo-router'
 import { useTheme } from '../../components/ThemeContext'
+import { useAuthStore } from '../../lib/store/auth'
 
 const KYC_DOCS = [
   { label: 'Aadhaar Card', number: 'XXXX XXXX 4521', status: 'verified', icon: '🪪', required: true },
@@ -29,8 +31,24 @@ const VEHICLE_DOCS = [
 
 export default function DriverScreen() {
   const { colors, mode, toggleTheme } = useTheme()
+  const router = useRouter()
+  const { logout } = useAuthStore()
   const [notif, setNotif] = useState(true)
   const [locShare, setLocShare] = useState(true)
+
+  const handleLogout = () => {
+    Alert.alert('Sign Out', 'Are you sure you want to sign out?', [
+      { text: 'Cancel', style: 'cancel' },
+      {
+        text: 'Sign Out',
+        style: 'destructive',
+        onPress: async () => {
+          await logout()
+          router.replace('/(auth)/login')
+        },
+      },
+    ])
+  }
 
   const docStatusColor = (s: string) =>
     s === 'verified' || s === 'valid' ? colors.success
@@ -241,6 +259,14 @@ export default function DriverScreen() {
               {mode === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
             </Text>
             <Text style={{ color: colors.textMuted, fontSize: 18 }}>›</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.settingRow, { borderTopWidth: 1, borderTopColor: colors.border }]}
+            onPress={handleLogout}
+            activeOpacity={0.7}
+          >
+            <Text style={{ fontSize: 20, marginRight: 12 }}>🚪</Text>
+            <Text style={[styles.settingLabel, { color: colors.error, flex: 1 }]}>Sign Out</Text>
           </TouchableOpacity>
         </View>
 

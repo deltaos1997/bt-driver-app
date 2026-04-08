@@ -3,12 +3,16 @@ import { View, Text, Animated, StyleSheet } from 'react-native'
 import { useRouter } from 'expo-router'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useTheme } from '../components/ThemeContext'
+import { useAuthStore } from '../lib/store/auth'
 
 export default function SplashIndex() {
   const router = useRouter()
   const { colors } = useTheme()
   const fadeAnim = useRef(new Animated.Value(0)).current
   const scaleAnim = useRef(new Animated.Value(0.8)).current
+  const hydrate = useAuthStore((s) => s.hydrate)
+  const isAuthenticated = useAuthStore((s) => s.isAuthenticated)
+  const isLoading = useAuthStore((s) => s.isLoading)
 
   useEffect(() => {
     Animated.parallel([
@@ -25,12 +29,20 @@ export default function SplashIndex() {
       }),
     ]).start()
 
-    const timer = setTimeout(() => {
-      router.replace('/(tabs)')
-    }, 1800)
-
-    return () => clearTimeout(timer)
+    hydrate()
   }, [])
+
+  useEffect(() => {
+    if (isLoading) return
+    const timer = setTimeout(() => {
+      if (isAuthenticated) {
+        router.replace('/(tabs)')
+      } else {
+        router.replace('/(auth)/login')
+      }
+    }, 1600)
+    return () => clearTimeout(timer)
+  }, [isLoading, isAuthenticated])
 
   return (
     <View style={[styles.container, { backgroundColor: colors.bg }]}>

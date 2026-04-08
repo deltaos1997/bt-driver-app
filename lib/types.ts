@@ -1,4 +1,6 @@
-export type UserRole = 'fleet_operator' | 'individual_driver'
+export type UserRole = 'driver' | 'fleet_owner' | 'shipper'
+export type AuthProvider = 'email' | 'google' | 'facebook'
+export type VehicleType = 'mini_truck' | 'lcv' | 'hcv' | 'trailer'
 
 export type BookingStatus = 'pending' | 'confirmed' | 'in_progress' | 'completed' | 'cancelled'
 export type DriverStatus = 'active' | 'inactive' | 'on_trip' | 'off_duty'
@@ -9,15 +11,32 @@ export interface User {
   phone: string
   email?: string
   role: UserRole
-  companyName?: string       // Fleet operators only
-  licenseNumber?: string     // Individual drivers
-  vehicleNumber?: string     // Individual drivers
-  vehicleType?: string
+  authProvider?: AuthProvider
+  companyName?: string       // Fleet owners only
+  gstNumber?: string         // Fleet owners / shippers
+  licenseNumber?: string     // Drivers
+  vehicleNumber?: string     // Drivers
+  vehicleType?: VehicleType
   profilePhoto?: string
   rating?: number
   totalTrips?: number
   joinedDate: string
-  token: string
+}
+
+export interface AuthSession {
+  user: User
+  accessToken: string
+  refreshToken: string
+}
+
+export interface RegisterData {
+  name: string
+  role: UserRole
+  email?: string
+  vehicle_type?: VehicleType
+  vehicle_number?: string
+  company_name?: string
+  gst_number?: string
 }
 
 export interface Booking {
